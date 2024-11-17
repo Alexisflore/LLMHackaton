@@ -55,14 +55,21 @@ def get_amendment_clusters():
     return clusters
 
 @app.get("/api/clusters")
-async def get_clusters():
-    amendments_df = pd.read_csv("data/amendements.csv")
+async def get_clusters(sort_filter: str = None, instance_filter: str = None):
+    amendments_df = pd.read_csv("data/test1000.csv")
+    
+    # Filtrer les données en fonction des paramètres de filtre
+    filtered_df = amendments_df
+    if sort_filter and sort_filter != 'Tous':
+        filtered_df = filtered_df[filtered_df["Sort de l'amendement"] == sort_filter]
+    if instance_filter and instance_filter != 'Tous':
+        filtered_df = filtered_df[filtered_df["Instance"] == instance_filter]
     
     # Remplacer les valeurs infinies ou NaN par une valeur par défaut
-    amendments_df = amendments_df.replace([np.inf, -np.inf, np.nan], 0)
+    filtered_df = filtered_df.replace([np.inf, -np.inf, np.nan], 0)
     
     # Grouper les amendements par "identification.numeroLong"
-    grouped = amendments_df.groupby("identification.numeroLong")
+    grouped = filtered_df.groupby("identification.numeroLong")
     
     result = []
     for cluster_id, cluster in grouped:
@@ -129,6 +136,10 @@ async def get_filter_values():
         "sort_values": sort_values,
         "instance_values": instance_values
     }
+    
+@app.get("/api/get_cluster_uids")
+async def get_cluster_uids():
+    get_uids_per_cluster()
 
 if __name__ == "__main__":
     import uvicorn
