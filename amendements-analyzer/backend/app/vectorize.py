@@ -12,9 +12,10 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 connection_str = os.getenv('NEON_CON_STR')
 api_key = os.getenv("MISTRAL_API_KEY")
+CSV_PATH = os.getenv("CSV_PATH")
 model = "mistral-embed"
 
-def connection_test(): 
+def connection_test():
     try:
         conn = psycopg2.connect(connection_str)
         print("Connection to Neon database established successfully")
@@ -44,6 +45,10 @@ def enable_extension():
 def neon_set_up():
     conn = psycopg2.connect(connection_str)
     cursor = conn.cursor()
+    cursor.execute("SELECT current_database();")
+    db_name = cursor.fetchone()
+    print("Connected to database:", db_name[0])
+    
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS hackathon_law_documents (
         id SERIAL PRIMARY KEY,
@@ -56,11 +61,11 @@ def neon_set_up():
     cursor.close()
     conn.close()
 
-def embedding_data(csv_path):
+def embedding_data():
     conn = psycopg2.connect(connection_str)
     cursor = conn.cursor()
     client = Mistral(api_key=api_key)
-    df = pd.read_csv(csv_path)
+    df = pd.read_csv(CSV_PATH)
     for index, row in df.iterrows():
         embeddings_batch_response = client.embeddings.create(
             model=model,
@@ -114,3 +119,7 @@ def get_uids_per_cluster():
     cursor.close()
     conn.close()
     return results
+
+if __name__ == "__main__":
+    df = pd.read_csv(CSV_PATH)
+    print(df[""])
