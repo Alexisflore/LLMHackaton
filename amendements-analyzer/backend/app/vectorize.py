@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 load_dotenv()
-
+import json
 import pandas as pd
 import psycopg2
 import numpy as np
@@ -57,7 +57,7 @@ def neon_set_up():
         id SERIAL PRIMARY KEY,
         cluster_id INTEGER,
         uid TEXT,
-        embedding VECTOR(1024)  -- vector size from Mistral embedding model
+        embedding VECTOR(1024)  -- vector size from model
     );
     """)
     conn.commit()
@@ -67,17 +67,11 @@ def neon_set_up():
 def embedding_data():
     conn = psycopg2.connect(connection_str)
     cursor = conn.cursor()
-    # client = Mistral(api_key=api_key)
     df = pd.read_csv(CSV_PATH)
     for index, row in df.iterrows():
         if pd.isna(row["corps.contenuAuteur.exposeSommaire"]):
             pass
         else:
-            # embeddings_batch_response = client.embeddings.create(
-            #     model=model,
-            #     inputs=[row["corps.contenuAuteur.exposeSommaire"]],
-            #     )
-            # embedding = embeddings_batch_response.data[0].embedding
             res = client.embeddings(
                 model='mxbai-embed-large',
                 prompt=row["corps.contenuAuteur.exposeSommaire"],
@@ -100,8 +94,14 @@ def clustering():
     results = cursor.fetchall()
 
     ids = [row[0] for row in results]
-    embeddings = np.array([row[1] for row in results])
+    embeddings = []
+    for row in results:
+        embedding = json.loads(row[1])
+        embeddings.append(np.array(embedding, dtype=float))
+    embeddings = np.array(embeddings)
     similarity_matrix = cosine_similarity(embeddings)
+    similarity_matrix = np.clip(similarity_matrix, 0, 1)  # Clip values to [0, 1]
+
     distance_matrix = 1 - similarity_matrix
 
     threshold = 0.2  # sim = 0.8
@@ -130,8 +130,11 @@ def get_uids_per_cluster():
             
     cursor.close()
     conn.close()
+    print(results)
     return results
 
 if __name__ == "__main__":
     # neon_set_up()
-    embedding_data()
+    # embedding_data()
+    # clustering()
+    get_uids_per_cluster()
