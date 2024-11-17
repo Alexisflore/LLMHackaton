@@ -10,6 +10,9 @@ from mistralai import Mistral
 from sklearn.cluster import DBSCAN
 from sklearn.metrics.pairwise import cosine_similarity
 
+from ollama import Client
+client = Client(host='https://familiar-ruthi-thinkia-6613a6f3.koyeb.app/')
+
 connection_str = os.getenv('NEON_CON_STR')
 api_key = os.getenv("MISTRAL_API_KEY")
 CSV_PATH = os.getenv("CSV_PATH")
@@ -64,18 +67,22 @@ def neon_set_up():
 def embedding_data():
     conn = psycopg2.connect(connection_str)
     cursor = conn.cursor()
-    client = Mistral(api_key=api_key)
+    # client = Mistral(api_key=api_key)
     df = pd.read_csv(CSV_PATH)
-    
     for index, row in df.iterrows():
         if pd.isna(row["corps.contenuAuteur.exposeSommaire"]):
             pass
         else:
-            embeddings_batch_response = client.embeddings.create(
-                model=model,
-                inputs=[row["corps.contenuAuteur.exposeSommaire"]],
-                )
-            embedding = embeddings_batch_response.data[0].embedding
+            # embeddings_batch_response = client.embeddings.create(
+            #     model=model,
+            #     inputs=[row["corps.contenuAuteur.exposeSommaire"]],
+            #     )
+            # embedding = embeddings_batch_response.data[0].embedding
+            res = client.embeddings(
+                model='mxbai-embed-large',
+                prompt=row["corps.contenuAuteur.exposeSommaire"],
+            )
+            embedding = res["embedding"]
             uid = row["uid"]
             print(f"Inserting vector from {uid}.")
             cursor.execute(
