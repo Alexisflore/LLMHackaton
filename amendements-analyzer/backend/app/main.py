@@ -105,8 +105,30 @@ async def get_amendment_details(amendment_id: str):
     return {"error": "Amendement non trouvé"}
 
 @app.get("/api/get_clusters_uids")
-async def get_clusters_datas():
-    get_uids_per_cluster()
+async def get_clusters_datas(sort_filter: str = None, instance_filter: str = None):
+    # Chargez les données depuis le fichier CSV
+    amendments_df = pd.read_csv("data/test1000.csv")
+
+    # Filtrez les données en fonction des paramètres de filtre
+    filtered_df = amendments_df
+    if sort_filter:
+        filtered_df = filtered_df[filtered_df["Sort de l'amendement"] == sort_filter]
+    if instance_filter:
+        filtered_df = filtered_df[filtered_df["Instance"] == instance_filter]
+
+    # Effectuez le clustering et renvoyez les données filtrées
+    # ...
+
+@app.get("/api/get_filter_values")
+async def get_filter_values():
+    amendments_df = pd.read_csv("data/test1000.csv")
+    sort_values = amendments_df["Sort de l'amendement"].fillna("Inconnu").unique().tolist()
+    instance_values = amendments_df["Instance"].fillna("Inconnu").unique().tolist()
+
+    return {
+        "sort_values": sort_values,
+        "instance_values": instance_values
+    }
 
 if __name__ == "__main__":
     import uvicorn
