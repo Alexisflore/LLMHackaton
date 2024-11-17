@@ -21,19 +21,24 @@ app.add_middleware(
 
 # Charger les données des amendements (à adapter selon votre structure de données)
 def load_amendments():
-    # Simulation de données - À remplacer par votre chargement réel
-    amendments_data = {
-        # exemple de structure
-        "AMANR5L17PO59048B0324P1D1N001864": {
-            "uid": "AMANR5L17PO59048B0324P1D1N001864",
-            "titre": "Article 7",
-            "exposeSommaire": "Le présent article comporte plusieurs mesures concernant l'accise sur l'électricité...",
-            "auteur": "Rapporteur",
-            "sort": "Tombé"
+    # Charger les données depuis le fichier CSV
+    amendments_df = pd.read_csv("app/data/amendements.csv")
+
+    # Convertir le DataFrame en dictionnaire
+    amendments_data = amendments_df.to_dict(orient="records")
+
+    # Convertir les données en format attendu
+    formatted_data = {}
+    for amendment in amendments_data:
+        uid = amendment["uid"]
+        formatted_data[uid] = {
+            "uid": uid,
+            "titre": amendment["titre"],
+            "exposeSommaire": amendment["exposeSommaire"],
+            "auteur": amendment["auteur"],
+            "sort": amendment["sort"]
         }
-        # ... autres amendements
-    }
-    return amendments_data
+    return formatted_data
 
 # Fonction simulant le clustering (à remplacer par votre fonction réelle)
 def get_amendment_clusters():
