@@ -28,23 +28,17 @@ export default function Home() {
   const [instanceValues, setInstanceValues] = useState([]);
   const [selectedSort, setSelectedSort] = useState<string | null>(null);
   const [selectedInstance, setSelectedInstance] = useState<string | null>(null);
+  const [allClusters, setAllClusters] = useState<Cluster[]>([]);
 
   useEffect(() => {
-    fetchClusters();
+    fetchAllClusters();
     fetchFilterValues();
   }, []);
 
-  const fetchClusters = async () => {
+  const fetchAllClusters = async () => {
     try {
-      const url = new URL('http://localhost:8000/api/clusters');
-      if (selectedSort) {
-        url.searchParams.append('sort_filter', selectedSort);
-      }
-      if (selectedInstance) {
-        url.searchParams.append('instance_filter', selectedInstance);
-      }
-
-      const response = await axios.get(url.toString());
+      const response = await axios.get('http://localhost:8000/api/clusters');
+      setAllClusters(response.data);
       setClusters(response.data);
     } catch (error) {
       console.error('Error fetching clusters:', error);
@@ -66,12 +60,30 @@ export default function Home() {
 
   const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedSort(event.target.value || null);
-    fetchClusters();
+    filterClusters();
   };
 
   const handleInstanceChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedInstance(event.target.value || null);
-    fetchClusters();
+    filterClusters();
+  };
+
+  const filterClusters = () => {
+    const filteredClusters = allClusters.filter((cluster) => {
+      const matchesSort =
+        selectedSort === null ||
+        selectedSort === 'Tous' ||
+        cluster.amendments.some((amendment) => amendment.sort === selectedSort);
+
+      const matchesInstance =
+        selectedInstance === null ||
+        selectedInstance === 'Tous' ||
+        cluster.amendments.some((amendment) => amendment.instance === selectedInstance);
+
+      return matchesSort && matchesInstance;
+    });
+
+    setClusters(filteredClusters);
   };
 
   const fetchFilterValues = async () => {
