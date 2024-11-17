@@ -132,13 +132,42 @@ def get_uids_per_cluster():
             
     cursor.close()
     conn.close()
-    print(len(results))
+    # print(len(results))
     # print(results)
     return results
 
+def run_resume():
+    res = get_uids_per_cluster()
+    # print(res[0][1])
+    res_dic = {}
+    df = pd.read_csv(CSV_PATH)
+    # for elem in res:
+    uids =  res[0][1]
+    texts = []
+    for index, row in df.iterrows():
+        if row["uid"] in uids:
+            texts.append(row["corps.contenuAuteur.exposeSommaire"])
+
+    global_prompt = f"""
+        You are an AI specializing in legal text analysis. Here is a collection of legal amendments:
+        {texts}
+        
+        Please provide:
+        1. A concise overarching summary combining all the provided amendments.
+        2. The main idea(s) and change(s) that these amendments could imply.
+        """
+    
+    model = "llama3.2"
+    res = client.generate(model=model, prompt=global_prompt)
+    print(res['response'])
+    # res_dic[1] = res
+    # return res_dic
+    
+
 if __name__ == "__main__":
-    neon_set_up()
+    # neon_set_up()
     # embedding_data()
     # clustering()
     # get_uids_per_cluster()
+    run_resume()
     
