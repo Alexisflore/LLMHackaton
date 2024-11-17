@@ -7,6 +7,7 @@ from typing import List, Dict
 import xml.etree.ElementTree as ET
 import os
 from transformers import pipeline
+from vectorize import *
 
 app = FastAPI()
 
@@ -77,3 +78,13 @@ async def get_amendment_details(amendment_id: str):
     if amendment_id in amendments:
         return amendments[amendment_id]
     return {"error": "Amendement non trouvé"}
+
+@app.get("/api/get_clusters_datas")
+async def get_clusters_datas():
+    get_uids_per_cluster()
+
+
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
