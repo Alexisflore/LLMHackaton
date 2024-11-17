@@ -9,6 +9,7 @@ import pdfplumber
 from mistralai import Mistral
 from sklearn.cluster import DBSCAN
 from sklearn.metrics.pairwise import cosine_similarity
+import html
 
 from ollama import Client
 client = Client(host='https://familiar-ruthi-thinkia-6613a6f3.koyeb.app/')
@@ -53,7 +54,7 @@ def neon_set_up():
     print("Connected to database:", db_name[0])
     
     cursor.execute("""
-    CREATE TABLE IF NOT EXISTS hackathon_law_documents (
+    CREATE TABLE IF NOT EXISTS hackathon_law_documents_2 (
         id SERIAL PRIMARY KEY,
         cluster_id INTEGER,
         uid TEXT,
@@ -72,15 +73,16 @@ def embedding_data():
         if pd.isna(row["corps.contenuAuteur.exposeSommaire"]):
             pass
         else:
+            cleaned_text = html.unescape(row["corps.contenuAuteur.exposeSommaire"])
             res = client.embeddings(
                 model='mxbai-embed-large',
-                prompt=row["corps.contenuAuteur.exposeSommaire"],
+                prompt=cleaned_text,
             )
             embedding = res["embedding"]
             uid = row["uid"]
             print(f"Inserting vector from {uid}.")
             cursor.execute(
-                "INSERT INTO hackathon_law_documents (uid, embedding) VALUES (%s, %s)",
+                "INSERT INTO hackathon_law_documents_2 (uid, embedding) VALUES (%s, %s)",
                 (uid, embedding)
             )
             conn.commit()
@@ -90,7 +92,7 @@ def embedding_data():
 def clustering():
     conn = psycopg2.connect(connection_str)
     cursor = conn.cursor()
-    cursor.execute("SELECT id, embedding FROM hackathon_law_documents;")
+    cursor.execute("SELECT id, embedding FROM hackathon_law_documents_2;")
     results = cursor.fetchall()
 
     ids = [row[0] for row in results]
@@ -110,7 +112,7 @@ def clustering():
 
     for doc_id, cluster_id in zip(ids, cluster_labels):
         cursor.execute(
-            "UPDATE hackathon_law_documents SET cluster_id = %s WHERE id = %s;",
+            "UPDATE hackathon_law_documents_2 SET cluster_id = %s WHERE id = %s;",
             (int(cluster_id), int(doc_id))
         )
     conn.commit()
@@ -123,7 +125,7 @@ def get_uids_per_cluster():
 
     cursor.execute("""
         SELECT cluster_id, ARRAY_AGG(uid) AS uids
-        FROM hackathon_law_documents
+        FROM hackathon_law_documents_2
         GROUP BY cluster_id;
     """)
     results = cursor.fetchall()
@@ -135,8 +137,8 @@ def get_uids_per_cluster():
     return results
 
 if __name__ == "__main__":
-    # neon_set_up()
+    neon_set_up()
     # embedding_data()
     # clustering()
-    get_uids_per_cluster()
+    # get_uids_per_cluster()
     
