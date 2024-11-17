@@ -79,7 +79,7 @@ async def get_amendment_details(amendment_id: str):
         return amendments[amendment_id]
     return {"error": "Amendement non trouvé"}
 
-@app.get("/api/get_clusters_datas")
+@app.get("/api/get_clusters_uids")
 async def get_clusters_datas():
     get_uids_per_cluster()
 
