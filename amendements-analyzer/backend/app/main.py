@@ -7,6 +7,7 @@ from typing import List, Dict
 import xml.etree.ElementTree as ET
 import os
 from transformers import pipeline
+from vectorize import *
 import math
 import numpy as np
 
@@ -102,3 +103,13 @@ async def get_amendment_details(amendment_id: str):
         }
     
     return {"error": "Amendement non trouvé"}
+
+@app.get("/api/get_clusters_uids")
+async def get_clusters_datas():
+    get_uids_per_cluster()
+
+
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
