@@ -7,7 +7,7 @@ from typing import List, Dict
 import xml.etree.ElementTree as ET
 import os
 from transformers import pipeline
-from vectorize import *
+from .vectorize import *
 import math
 import numpy as np
 

@@ -44,7 +44,7 @@ export default function Home() {
 	<>
     <main className="min-h-screen bg-gray-50">
       <div className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold mb-8">Analyse des Amendements</h1>
+        <h1 className="text-3xl font-bold mb-8 text-blue-600">Analyse des Amendements</h1>
         
         {loading ? (
           <div className="text-center py-8">
@@ -59,13 +59,13 @@ export default function Home() {
                 <div
                   key={cluster.cluster_id}
                   className={`p-4 rounded-lg shadow cursor-pointer transition-colors
-                    ${selectedCluster?.cluster_id === cluster.cluster_id 
-                      ? 'bg-blue-50 border-2 border-blue-500' 
-                      : 'bg-white hover:bg-gray-50'}`}
+                    ${selectedCluster?.cluster_id === cluster.cluster_id
+                      ? 'bg-blue-600 text-white'
+                      : 'bg-gray-200 text-gray-800 hover:bg-gray-300'}`}
                   onClick={() => setSelectedCluster(cluster)}
                 >
                   <h3 className="font-medium">{cluster.theme}</h3>
-                  <p className="text-sm text-gray-600 mt-2">
+                  <p className="text-sm mt-2">
                     {cluster.amendments.length} amendements
                   </p>
                 </div>

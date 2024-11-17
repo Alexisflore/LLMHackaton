@@ -1,2 +1,5 @@
 amendements-analyzer/backend/venv/
 amendements-analyzer/frontend/node_modules/
+.env
+.DS_Store
+amendements-analyzer/backend/app/__pycache__/
