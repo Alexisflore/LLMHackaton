@@ -136,6 +136,10 @@ async def get_filter_values():
         "sort_values": sort_values,
         "instance_values": instance_values
     }
+    
+@app.get("/api/get_cluster_uids")
+async def get_cluster_uids():
+    get_uids_per_cluster()
 
 if __name__ == "__main__":
     import uvicorn

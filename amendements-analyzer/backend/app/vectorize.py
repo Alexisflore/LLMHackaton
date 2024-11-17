@@ -130,7 +130,7 @@ def get_uids_per_cluster():
             
     cursor.close()
     conn.close()
-    print(results)
+    # print(results)
     return results
 
 if __name__ == "__main__":
