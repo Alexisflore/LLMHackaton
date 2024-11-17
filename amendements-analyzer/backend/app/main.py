@@ -8,6 +8,8 @@ import xml.etree.ElementTree as ET
 import os
 from transformers import pipeline
 from vectorize import *
+import math
+import numpy as np
 
 app = FastAPI()
 
@@ -23,7 +25,7 @@ app.add_middleware(
 # Charger les données des amendements (à adapter selon votre structure de données)
 def load_amendments():
     # Charger les données depuis le fichier CSV
-    amendments_df = pd.read_csv("app/data/amendements.csv")
+    amendments_df = pd.read_csv("data/amendements.csv")
 
     # Convertir le DataFrame en dictionnaire
     amendments_data = amendments_df.to_dict(orient="records")
@@ -41,42 +43,65 @@ def load_amendments():
         }
     return formatted_data
 
-# Fonction simulant le clustering (à remplacer par votre fonction réelle)
 def get_amendment_clusters():
-    return {
-        "cluster_1": ["AMANR5L17PO59048B0324P1D1N001864", "AMANR5L17PO59048B0324P1D1N001865"],
-        "cluster_2": ["AMANR5L17PO59048B0324P1D1N001866", "AMANR5L17PO59048B0324P1D1N001867"],
-        # ... autres clusters
-    }
+    amendments_df = pd.read_csv("data/amendements.csv")
+    grouped = amendments_df.groupby("identification.numeroLong")
+    
+    clusters = {}
+    for cluster_id, cluster in grouped:
+        amendment_ids = cluster["uid"].tolist()
+        clusters[cluster_id] = amendment_ids
+    
+    return clusters
 
 @app.get("/api/clusters")
 async def get_clusters():
-    amendments = load_amendments()
-    clusters = get_amendment_clusters()
+    amendments_df = pd.read_csv("data/amendements.csv")
+    
+    # Remplacer les valeurs infinies ou NaN par une valeur par défaut
+    amendments_df = amendments_df.replace([np.inf, -np.inf, np.nan], 0)
+    
+    # Grouper les amendements par "identification.numeroLong"
+    grouped = amendments_df.groupby("identification.numeroLong")
     
     result = []
-    for cluster_id, amendment_ids in clusters.items():
-        cluster_amendments = [amendments[aid] for aid in amendment_ids if aid in amendments]
+    for cluster_id, cluster in grouped:
+        amendment_ids = cluster["uid"].tolist()
+        cluster_amendments = cluster.to_dict("records")
         
-        # Concatenate exposeSommaire from all amendments in cluster
-        full_text = " ".join([amdt["exposeSommaire"] for amdt in cluster_amendments])
+        # Remplacer les valeurs infinies ou NaN dans les dictionnaires
+        for amdt in cluster_amendments:
+            for key, value in amdt.items():
+                if isinstance(value, float) and (math.isinf(value) or math.isnan(value)):
+                    amdt[key] = 0
         
+        full_text = " ".join([amdt.get("exposeSommaire", "") for amdt in cluster_amendments if isinstance(amdt.get("exposeSommaire", ""), str)])
         
         result.append({
             "cluster_id": cluster_id,
             "amendments": cluster_amendments,
             "summary": "",
-            "theme": "À déterminer",  # Pourrait être déterminé par une analyse plus poussée
-            "key_points": []  # Pourrait être extrait par une analyse plus poussée
+            "theme": "À déterminer",
+            "key_points": []
         })
     
     return result
 
 @app.get("/api/amendment/{amendment_id}")
 async def get_amendment_details(amendment_id: str):
-    amendments = load_amendments()
-    if amendment_id in amendments:
-        return amendments[amendment_id]
+    amendments_df = pd.read_csv("data/amendements.csv")
+    amendment = amendments_df.loc[amendments_df['uid'] == amendment_id]
+    
+    if not amendment.empty:
+        amendment_data = amendment.to_dict('records')[0]
+        return {
+            "uid": amendment_data["uid"],
+            "titre": amendment_data["Titre court"],
+            "exposeSommaire": amendment_data["exposeSommaire"],
+            "auteur": amendment_data["Auteur"],
+            "sort": amendment_data["Sort de l'amendement"]
+        }
+    
     return {"error": "Amendement non trouvé"}
 
 @app.get("/api/get_clusters_uids")
