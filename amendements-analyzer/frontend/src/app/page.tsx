@@ -10,6 +10,7 @@ type Amendment = {
   exposeSommaire: string;
   auteur: string;
   sort: string;
+  instance?: string;
 };
 
 type Cluster = {
@@ -29,7 +30,6 @@ export default function Home() {
   const [selectedSort, setSelectedSort] = useState<string | null>(null);
   const [selectedInstance, setSelectedInstance] = useState<string | null>(null);
   const [allClusters, setAllClusters] = useState<Cluster[]>([]);
-
   useEffect(() => {
     fetchAllClusters();
     fetchFilterValues();
@@ -37,7 +37,7 @@ export default function Home() {
 
   const fetchAllClusters = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/api/clusters');
+      const response = await axios.get('http://localhost:8000/api/demo/clusters');
       setAllClusters(response.data);
       setClusters(response.data);
     } catch (error) {
@@ -69,18 +69,25 @@ export default function Home() {
   };
 
   const filterClusters = () => {
-    const filteredClusters = allClusters.filter((cluster) => {
-      const matchesSort =
-        selectedSort === null ||
-        selectedSort === 'Tous' ||
-        cluster.amendments.some((amendment) => amendment.sort === selectedSort);
+    const filteredClusters = allClusters.map((cluster) => {
+      const filteredAmendments = cluster.amendments.filter((amendment) => {
+        const matchesSort =
+          selectedSort === null ||
+          selectedSort === 'Tous' ||
+          amendment.sort === selectedSort;
 
-      const matchesInstance =
-        selectedInstance === null ||
-        selectedInstance === 'Tous' ||
-        cluster.amendments.some((amendment) => amendment.instance === selectedInstance);
+        const matchesInstance =
+          selectedInstance === null ||
+          selectedInstance === 'Tous' ||
+          amendment.instance === selectedInstance;
 
-      return matchesSort && matchesInstance;
+        return matchesSort && matchesInstance;
+      });
+
+      return {
+        ...cluster,
+        amendments: filteredAmendments,
+      };
     });
 
     setClusters(filteredClusters);
@@ -97,11 +104,24 @@ export default function Home() {
     }
   };
 
+  const getSortBadgeColor = (sort: string) => {
+    switch (sort) {
+      case 'Adopté':
+        return 'bg-green-100 text-green-800';
+      case 'Tombé':
+        return 'bg-red-100 text-red-800';
+      case 'Rejeté':
+        return 'bg-red-500 text-white';
+      default:
+        return 'bg-gray-200 text-gray-800';
+    }
+  };
+
   return (
     <>
     <main className="min-h-screen bg-gray-50">
       <div className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold mb-8 text-blue-600">Analyse des Amendements</h1>
+        <h1 className="text-3xl font-bold mb-8 text-blue-600">Parllment</h1>
         
         <div className="mb-4 text-black">
           <label htmlFor="sort-filter" className="mr-2">
@@ -174,7 +194,7 @@ export default function Home() {
               {selectedCluster ? (
                 <div className="bg-white rounded-lg shadow p-6">
                   <h2 className="text-2xl font-bold mb-4 text-black">
-                    Cluster {selectedCluster.cluster_id}
+                    {selectedCluster.theme}
                   </h2>
                   
                   <div className="mb-6">
@@ -184,28 +204,43 @@ export default function Home() {
 
                   <div className="space-y-4">
                     <h3 className="text-lg font-semibold text-black">Amendements</h3>
-                    {selectedCluster.amendments.map((amendment) => (
-                      <div
-                        key={amendment.uid}
-                        className="border rounded-lg p-4"
-                      >
-                        <div className="flex justify-between items-start mb-2">
-                          <h4 className="font-medium text-black">{amendment.titre}</h4>
-                          <span className={`px-2 py-1 rounded text-sm
-                            ${amendment.sort === 'Tombé' 
-                              ? 'bg-red-100 text-red-800' 
-                              : 'bg-green-100 text-green-800'}`}>
-                            {amendment.sort}
-                          </span>
-                        </div>
-                        <p className="text-sm text-black">
-                          Auteur: {amendment.auteur}
-                        </p>
-                        <div className="mt-2 text-sm text-black">
-                          {amendment.exposeSommaire}
-                        </div>
-                      </div>
-                    ))}
+                    {selectedCluster.amendments.filter(
+                      (amendment) =>
+                        (selectedSort === null || selectedSort === 'Tous' || amendment.sort === selectedSort) &&
+                        (selectedInstance === null || selectedInstance === 'Tous' || amendment.instance === selectedInstance)
+                    ).length > 0 ? (
+                      selectedCluster.amendments
+                        .filter(
+                          (amendment) =>
+                            (selectedSort === null || selectedSort === 'Tous' || amendment.sort === selectedSort) &&
+                            (selectedInstance === null || selectedInstance === 'Tous' || amendment.instance === selectedInstance)
+                        )
+                        .map((amendment) => (
+                          <div
+                            key={amendment.uid}
+                            className="border rounded-lg p-4"
+                          >
+                            <div className="flex justify-between items-start mb-2">
+                              <h4 className="font-medium text-black">{amendment.titre}</h4>
+                              <span
+                                className={`px-2 py-1 rounded text-sm ${getSortBadgeColor(amendment.sort)}`}
+                              >
+                                {amendment.sort}
+                              </span>
+                            </div>
+                            <p className="text-sm text-black">
+                              Auteur: {amendment.auteur}
+                            </p>
+                            <div className="mt-2 text-sm text-black">
+                              {amendment.exposeSommaire}
+                            </div>
+                          </div>
+                        ))
+                    ) : (
+                      <p className="text-black">
+                        Aucun amendement ne correspond aux filtres sélectionnés.
+                      </p>
+                    )}
                   </div>
                 </div>
               ) : (

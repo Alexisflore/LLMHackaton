@@ -44,30 +44,50 @@ export default function Chatbot() {
     setInputValue('');
     setIsLoading(true);
 
-    try {
-      const response = await axios.post('http://localhost:8000/api/chat', {
-        message: inputValue,
-        context: null, // Vous pouvez ajouter du contexte si nécessaire
-      });
-
+    // Vérifier si l'input contient "merci"
+    if (inputValue.toLowerCase().includes('merci')) {
       const botMessage = {
         id: messages.length + 2,
-        text: response.data.response,
+        text: 'De rien, c\'est avec plaisir',
         isBot: true,
       };
 
       setMessages((prev) => [...prev, botMessage]);
-    } catch (error) {
-      console.error('Error sending message:', error);
-      const errorMessage = {
+      setIsLoading(false);
+      return;
+    }
+
+    // Générer une réponse aléatoire avec des amendements fictifs
+    const titresComplets = [
+      'PLF POUR 2025',
+      'PLF POUR 2026',
+      'PLF POUR 2027',
+      'PLF POUR 2028',
+      'PLF POUR 2029',
+      'PLF POUR 2030',
+    ];
+    const numeros = [860, 629, 921, 143, 672, 939];
+    const reponse = `Voici la liste des amendements prévoyant une baisse des dépenses publiques :\n\n${numeros
+      .sort(() => 0.5 - Math.random())
+      .slice(0, 3)
+      .map(
+        (num, index) =>
+          `- Amendement n° ${num} - ${titresComplets[index]} - 1ère lecture (1ère assemblée saisie) - n° ${Math.floor(
+            Math.random() * 1000
+          )}`
+      )
+      .join('\n')}`;
+
+    setTimeout(() => {
+      const botMessage = {
         id: messages.length + 2,
-        text: "Désolé, une erreur s'est produite. Veuillez réessayer.",
+        text: reponse,
         isBot: true,
       };
-      setMessages((prev) => [...prev, errorMessage]);
-    } finally {
+
+      setMessages((prev) => [...prev, botMessage]);
       setIsLoading(false);
-    }
+    }, 4000);
   };
 
   return (
@@ -87,7 +107,7 @@ export default function Chatbot() {
         <div className="bg-white rounded-lg shadow-xl w-96 max-w-[calc(100vw-2rem)] h-[600px] max-h-[calc(100vh-2rem)] flex flex-col">
           {/* Header */}
           <div className="p-4 border-b flex justify-between items-center bg-blue-500 text-white rounded-t-lg">
-            <h3 className="font-semibold">Assistant Amendements</h3>
+            <h3 className="font-semibold">Assistant Agent</h3>
             <button
               onClick={() => setIsOpen(false)}
               className="hover:bg-blue-600 rounded p-1"
@@ -108,7 +128,7 @@ export default function Chatbot() {
                 <div
                   className={`max-w-[80%] p-3 rounded-lg ${
                     message.isBot
-                      ? 'bg-gray-100'
+                      ? 'bg-gray-100 text-black'
                       : 'bg-blue-500 text-white'
                   }`}
                 >
@@ -138,7 +158,7 @@ export default function Chatbot() {
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 placeholder="Posez votre question..."
-                className="flex-1 p-2 border rounded-lg focus:outline-none focus:border-blue-500"
+                className="flex-1 p-2 border rounded-lg focus:outline-none focus:border-blue-500 text-gray-800"
                 disabled={isLoading}
               />
               <button

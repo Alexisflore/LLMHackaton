@@ -8,3 +8,4 @@ transformers
 psycopg2-binary
 mistralai
 scikit-learn
+ollama
