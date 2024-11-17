@@ -130,7 +130,7 @@ def get_uids_per_cluster():
             
     cursor.close()
     conn.close()
-    print(results)
+    print(len(results))
     return results
 
 if __name__ == "__main__":
@@ -138,3 +138,4 @@ if __name__ == "__main__":
     # embedding_data()
     # clustering()
     get_uids_per_cluster()
+    

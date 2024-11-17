@@ -108,8 +108,6 @@ async def get_amendment_details(amendment_id: str):
 async def get_clusters_datas():
     get_uids_per_cluster()
 
-
-
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
