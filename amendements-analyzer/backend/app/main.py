@@ -1,12 +1,12 @@
 # backend/app/main.py
-from fastapi import FastAPI, UploadFile, File
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from sentence_transformers import SentenceTransformer
-from sklearn.metrics.pairwise import cosine_similarity
-from typing import List
-import pandas as pd
-import numpy as np
 import json
+import pandas as pd
+from typing import List, Dict
+import xml.etree.ElementTree as ET
+import os
+from transformers import pipeline
 
 app = FastAPI()
 
@@ -19,39 +19,61 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Charger le modèle de sentence-transformers
-model = SentenceTransformer('distilbert-base-multilingual-cased')
+# Charger les données des amendements (à adapter selon votre structure de données)
+def load_amendments():
+    # Simulation de données - À remplacer par votre chargement réel
+    amendments_data = {
+        # exemple de structure
+        "AMANR5L17PO59048B0324P1D1N001864": {
+            "uid": "AMANR5L17PO59048B0324P1D1N001864",
+            "titre": "Article 7",
+            "exposeSommaire": "Le présent article comporte plusieurs mesures concernant l'accise sur l'électricité...",
+            "auteur": "Rapporteur",
+            "sort": "Tombé"
+        }
+        # ... autres amendements
+    }
+    return amendments_data
 
-@app.post("/api/upload")
-async def upload_file(file: UploadFile = File(...)):
-    # Lire le fichier CSV
-    df = pd.read_csv(file.file)
-    
-    # Calculer les embeddings pour chaque amendement
-    embeddings = model.encode(df['texte'].tolist())
-    
-    # Calculer la matrice de similarité
-    similarity_matrix = cosine_similarity(embeddings)
-    
-    # Trouver les amendements similaires
-    similar_pairs = []
-    for i in range(len(similarity_matrix)):
-        for j in range(i + 1, len(similarity_matrix)):
-            if similarity_matrix[i][j] > 0.8:  # Seuil de similarité
-                similar_pairs.append({
-                    'amendement1': df.iloc[i]['id'],
-                    'amendement2': df.iloc[j]['id'],
-                    'similarite': float(similarity_matrix[i][j])
-                })
-    
-    return {"similar_pairs": similar_pairs}
+# Fonction simulant le clustering (à remplacer par votre fonction réelle)
+def get_amendment_clusters():
+    return {
+        "cluster_1": ["AMANR5L17PO59048B0324P1D1N001864", "AMANR5L17PO59048B0324P1D1N001865"],
+        "cluster_2": ["AMANR5L17PO59048B0324P1D1N001866", "AMANR5L17PO59048B0324P1D1N001867"],
+        # ... autres clusters
+    }
 
-@app.get("/api/analyze/{amendement_id}")
-async def analyze_amendement(amendement_id: str):
-    # Ici, vous pourriez ajouter une analyse plus détaillée
-    # comme l'extraction de mots-clés, résumé, etc.
-    return {"message": "Analyse détaillée de l'amendement"}
+# Initialiser le modèle de résumé
+summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
 
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+@app.get("/api/clusters")
+async def get_clusters():
+    amendments = load_amendments()
+    clusters = get_amendment_clusters()
+    
+    result = []
+    for cluster_id, amendment_ids in clusters.items():
+        cluster_amendments = [amendments[aid] for aid in amendment_ids if aid in amendments]
+        
+        # Concatenate exposeSommaire from all amendments in cluster
+        full_text = " ".join([amdt["exposeSommaire"] for amdt in cluster_amendments])
+        
+        # Generate summary using LLM
+        summary = summarizer(full_text, max_length=150, min_length=50, do_sample=False)[0]['summary_text']
+        
+        result.append({
+            "cluster_id": cluster_id,
+            "amendments": cluster_amendments,
+            "summary": summary,
+            "theme": "À déterminer",  # Pourrait être déterminé par une analyse plus poussée
+            "key_points": []  # Pourrait être extrait par une analyse plus poussée
+        })
+    
+    return result
+
+@app.get("/api/amendment/{amendment_id}")
+async def get_amendment_details(amendment_id: str):
+    amendments = load_amendments()
+    if amendment_id in amendments:
+        return amendments[amendment_id]
+    return {"error": "Amendement non trouvé"}
