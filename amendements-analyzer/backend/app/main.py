@@ -48,9 +48,6 @@ def get_amendment_clusters():
         # ... autres clusters
     }
 
-# Initialiser le modèle de résumé
-summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
-
 @app.get("/api/clusters")
 async def get_clusters():
     amendments = load_amendments()
@@ -63,13 +60,11 @@ async def get_clusters():
         # Concatenate exposeSommaire from all amendments in cluster
         full_text = " ".join([amdt["exposeSommaire"] for amdt in cluster_amendments])
         
-        # Generate summary using LLM
-        summary = summarizer(full_text, max_length=150, min_length=50, do_sample=False)[0]['summary_text']
         
         result.append({
             "cluster_id": cluster_id,
             "amendments": cluster_amendments,
-            "summary": summary,
+            "summary": "",
             "theme": "À déterminer",  # Pourrait être déterminé par une analyse plus poussée
             "key_points": []  # Pourrait être extrait par une analyse plus poussée
         })
