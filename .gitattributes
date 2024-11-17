@@ -1,1 +1,2 @@
+testfull.csv filter=lfs diff=lfs merge=lfs -text
 amendements-analyzer/backend/data/testfull.csv filter=lfs diff=lfs merge=lfs -text
