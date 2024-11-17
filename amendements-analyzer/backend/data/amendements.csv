@@ -1,0 +1,85 @@
+Titre court    Titre complet    Numéro de l'amendement    Partie de l'amendement    Sort de l'amendement    Désignation de l'article    Délibération    Auteur    Cosignataire(s)    Instance    Etape du texte    URL Dossier législatif    URL Texte référence    URL Amendement    URL Amendement format XML
+uid    "AMANR5L17PO59048B0324P1D1N001864"
+chronotag    "1729184338157"
+legislature    "17"
+identification
+numeroLong    "I-CF1864"
+numeroOrdreDepot    "1864"
+prefixeOrganeExamen    "CION_FIN"
+numeroRect    "0"
+examenRef    "EXANR5L17PO59048B0324P1D1"
+texteLegislatifRef    "PRJLANR5L17B0324"
+triAmendement    "bfaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaw"
+cardinaliteAmdtMultiples    "1"
+amendementParentRef    {}
+signataires
+auteur
+typeAuteur    "Rapporteur"
+gouvernementRef    {}
+acteurRef    "PA942"
+groupePolitiqueRef    "PO845485"
+auteurRapporteurOrganeRef    {}
+cosignataires    {}
+suffixe    {}
+libelle
+pointeurFragmentTexte
+partieAmendableRef    {}
+division
+titre    "Article 7"
+articleDesignationCourte    "ART. 7"
+articleDesignation    "ARTICLE 7"
+type    "ARTICLE"
+avant_A_Apres    "A"
+divisionRattachee    {}
+articleAdditionnel    "false"
+chapitreAdditionnel    "false"
+urlDivisionTexteVise    "/17/textes/0324A.asp#D_Article_7"
+amendementStandard
+alinea
+avant_A_Apres    "Avant"
+numero    "1"
+alineaDesignation
+corps
+cartoucheInformatif    {}
+contenuAuteur
+dispositif
+avantAppel    {}
+exposeSommaire
+annexeExposeSommaire    {}
+cycleDeVie
+dateDepot    "2024-10-14"
+datePublication    "2024-10-16"
+soumisArticle40    "false"
+etatDesTraitements
+etat
+code    "DI"
+libelle    "Discuté"
+sousEtat
+code    "DI"
+libelle    "Tombé"
+dateSort
+sort    "Tombé"
+representations
+representation
+nom    "PDF"
+typeMime
+type    "application"
+subType    "PDF"
+statutRepresentation
+verbatim    "true"
+canonique    "true"
+officielle    "true"
+transcription    "false"
+enregistrement    "false"
+repSource    {}
+offset    {}
+contenu
+documentURI
+dateDispoRepresentation    {}
+seanceDiscussionRef    {}
+article99    "false"
+loiReference    {}
+discussionCommune    {}
+discussionIdentique    {}
+accordGouvernementDepotHorsDelai
+exposeSommaire    "<p>Le pr&#x00E9;sent article comporte plusieurs mesures concernant l'accise sur l'&#x00E9;lectricit&#x00E9;, dont le cumul pourrait conduire &#x00E0; accro&#x00EE;tre consid&#x00E9;rablement le montant de cette accise pour les m&#x00E9;nages.</p><p>Il convient de fixer un plafond que le pouvoir r&#x00E9;glementaire ne pourra d&#x00E9;passer.</p><p>Il est propos&#x00E9; de fixer ce plafond &#x00E0; 34,94 euros par m&#x00E9;gawattheure (MWh), ce qui correspond &#x00E0; la somme du tarif normal de l'accise en 2025, qui devrait s'&#x00E9;lever &#x00E0; 33,78 euros / MWh en l'absence de bouclier tarifaire, et du montant de la contribution des gestionnaires de r&#x00E9;seaux au financement des aides aux collectivit&#x00E9;s pour l'&#x00E9;lectrification rurale (FAC&#x00E9;), dont la suppression, pr&#x00E9;vue &#x00E0; cet article, doit abaisser le tarif de l'abonnement d'1,16 euro / MWh pour tous les consommateurs.</p>"
