@@ -110,6 +110,7 @@ def get_uids_per_cluster():
         GROUP BY cluster_id;
     """)
     results = cursor.fetchall()
+            
     cursor.close()
     conn.close()
     return results

@@ -7,6 +7,7 @@ from typing import List
 import pandas as pd
 import numpy as np
 import json
+from vectorize import *
 
 app = FastAPI()
 
@@ -51,6 +52,12 @@ async def analyze_amendement(amendement_id: str):
     # Ici, vous pourriez ajouter une analyse plus détaillée
     # comme l'extraction de mots-clés, résumé, etc.
     return {"message": "Analyse détaillée de l'amendement"}
+
+@app.get("/api/get_clusters_datas")
+async def get_clusters_datas():
+    get_uids_per_cluster()
+
+
 
 if __name__ == "__main__":
     import uvicorn
