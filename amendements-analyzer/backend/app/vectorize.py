@@ -66,18 +66,23 @@ def embedding_data():
     cursor = conn.cursor()
     client = Mistral(api_key=api_key)
     df = pd.read_csv(CSV_PATH)
+    
     for index, row in df.iterrows():
-        embeddings_batch_response = client.embeddings.create(
-            model=model,
-            inputs=[row["exposeSommaire"]],
+        if pd.isna(row["corps.contenuAuteur.exposeSommaire"]):
+            pass
+        else:
+            embeddings_batch_response = client.embeddings.create(
+                model=model,
+                inputs=[row["corps.contenuAuteur.exposeSommaire"]],
+                )
+            embedding = embeddings_batch_response.data[0].embedding
+            uid = row["uid"]
+            print(f"Inserting vector from {uid}.")
+            cursor.execute(
+                "INSERT INTO hackathon_law_documents (uid, embedding) VALUES (%s, %s)",
+                (uid, embedding)
             )
-        embedding = embeddings_batch_response.data[0].embedding
-        uid = row["uid"]
-        cursor.execute(
-            "INSERT INTO hackathon_law_documents (uid, embedding) VALUES (%s, %s, %s)",
-            (uid, embedding)
-        )
-        conn.commit()
+            conn.commit()
     cursor.close()
     conn.close()
     
@@ -121,5 +126,5 @@ def get_uids_per_cluster():
     return results
 
 if __name__ == "__main__":
-    df = pd.read_csv(CSV_PATH)
-    print(df[""])
+    # neon_set_up()
+    embedding_data()
