@@ -46,14 +46,16 @@ export default function Chatbot() {
 
     // Vérifier si l'input contient "merci"
     if (inputValue.toLowerCase().includes('merci')) {
-      const botMessage = {
-        id: messages.length + 2,
-        text: 'De rien, c\'est avec plaisir',
-        isBot: true,
-      };
+      setTimeout(() => {
+        const botMessage = {
+          id: messages.length + 2,
+          text: 'De rien, c\'est avec plaisir',
+          isBot: true,
+        };
 
-      setMessages((prev) => [...prev, botMessage]);
-      setIsLoading(false);
+        setMessages((prev) => [...prev, botMessage]);
+        setIsLoading(false);
+      }, 2000); // Délai de 2 secondes
       return;
     }
 
