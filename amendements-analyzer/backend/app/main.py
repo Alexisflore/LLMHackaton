@@ -166,7 +166,7 @@ clusters_example = [
         "amendments": [
             {
                 "uid": "AMANR5L17PO59048B0324P1D1N000001",
-                "titre": "Amendement n° 1 - PLF POUR 2025",
+                "titre": "Amendement n° 78 - PLF POUR 2025",
                 "exposeSommaire": "Augmentation du budget pour les panneaux solaires",
                 "auteur": "Martin Élisa",
                 "sort": "Adopté",
@@ -174,7 +174,7 @@ clusters_example = [
             },
             {
                 "uid": "AMANR5L17PO59048B0324P1D1N000002",
-                "titre": "Amendement n° 2 - PLF POUR 2025",
+                "titre": "Amendement n° 093 - PLF POUR 2025",
                 "exposeSommaire": "Soutien aux éoliennes offshore",
                 "auteur": "Dubois Jean",
                 "sort": "Rejeté",
@@ -182,7 +182,7 @@ clusters_example = [
             },
             {
                 "uid": "AMANR5L17PO59048B0324P1D1N000003",
-                "titre": "Amendement n° 3 - PLF POUR 2025",
+                "titre": "Amendement n° 127 - PLF POUR 2025",
                 "exposeSommaire": "Développement des réseaux intelligents",
                 "auteur": "Bernard Thomas",
                 "sort": "Non soutenu",
@@ -198,7 +198,7 @@ clusters_example = [
 			},
 			{
                 "uid": "AMANR5L17PO59048B0324P1D1N000052",
-                	"titre": "Amendement n° 52 - PLF POUR 2025",
+                	"titre": "Amendement n° 902 - PLF POUR 2025",
                 "exposeSommaire": "Déploiement des bornes de recharge électrique",
                 "auteur": "Petit Sophie",
                 "sort": "Adopté",
@@ -214,7 +214,7 @@ clusters_example = [
         "amendments": [
             {
                 "uid": "AMANR5L17PO59048B0324P1D1N000004",
-                "titre": "Amendement n° 4 - PLF POUR 2025",
+                "titre": "Amendement n° 783 - PLF POUR 2025",
                 "exposeSommaire": "Augmentation des aides au logement",
                 "auteur": "Petit Sophie",
                 "sort": "Adopté",
@@ -222,7 +222,7 @@ clusters_example = [
             },
             {
                 "uid": "AMANR5L17PO59048B0324P1D1N000005",
-                "titre": "Amendement n° 5 - PLF POUR 2025",
+                "titre": "Amendement n° -392 - PLF POUR 2025",
                 "exposeSommaire": "Revalorisation des minima sociaux",
                 "auteur": "Richard Claire",
                 "sort": "Tombé",
@@ -230,7 +230,7 @@ clusters_example = [
             },
             {
 			"uid": "AMANR5L17PO59048B0324P1D1N000053",
-			"titre": "Amendement n° 53 - PLF POUR 2025",
+			"titre": "Amendement n° 953 - PLF POUR 2025",
 			"exposeSommaire": "Renforcement de la défense spatiale",
 			"auteur": "Bernard Thomas",
 			"sort": "Adopté",
@@ -238,7 +238,7 @@ clusters_example = [
 		},
 		{
 			"uid": "AMANR5L17PO59048B0324P1D1N000054",
-			"titre": "Amendement n° 54 - PLF POUR 2025",
+			"titre": "Amendement n° 150 - PLF POUR 2025",
 			"exposeSommaire": "Modernisation des systèmes de communication militaire",
 			"auteur": "Moreau Philippe",
                 "sort": "Rejeté",
@@ -254,7 +254,7 @@ clusters_example = [
         "amendments": [
             {
                 "uid": "AMANR5L17PO59048B0324P1D1N000006",
-                "titre": "Amendement n° 6 - PLF POUR 2025",
+                "titre": "Amendement n° 777 - PLF POUR 2025",
                 "exposeSommaire": "Rénovation des établissements scolaires",
                 "auteur": "Laurent Anne",
                 "sort": "Adopté",
@@ -262,7 +262,7 @@ clusters_example = [
             },
             {
                 "uid": "AMANR5L17PO59048B0324P1D1N000007",
-                "titre": "Amendement n° 7 - PLF POUR 2025",
+                "titre": "Amendement n° 27 - PLF POUR 2025",
                 "exposeSommaire": "Formation continue des enseignants",
                 "auteur": "Moreau Philippe",
                 "sort": "Non renseigné",
@@ -278,7 +278,7 @@ clusters_example = [
         "amendments": [
             {
                 "uid": "AMANR5L17PO59048B0324P1D1N000008",
-                "titre": "Amendement n° 8 - PLF POUR 2025",
+                "titre": "Amendement n° 761 - PLF POUR 2025",
                 "exposeSommaire": "Modernisation des équipements militaires",
                 "auteur": "Robert Michel",
                 "sort": "Adopté",
@@ -286,7 +286,7 @@ clusters_example = [
             },
             {
                 "uid": "AMANR5L17PO59048B0324P1D1N000009",
-                "titre": "Amendement n° 9 - PLF POUR 2025",
+                "titre": "Amendement n° 225 - PLF POUR 2025",
                 "exposeSommaire": "Cybersécurité des infrastructures",
                 "auteur": "Girard Julie",
                 "sort": "Retiré",
@@ -310,7 +310,7 @@ clusters_example = [
             },
             {
                 "uid": "AMANR5L17PO59048B0324P1D1N000011",
-                "titre": "Amendement n° 11 - PLF POUR 2025",
+                "titre": "Amendement n° 90 - PLF POUR 2025",
                 "exposeSommaire": "Innovation dans l'agroécologie",
                 "auteur": "Dubois Jean",
                 "sort": "Adopté",
@@ -326,7 +326,7 @@ clusters_example = [
     "amendments": [
         {
             "uid": "AMANR5L17PO59048B0324P1D1N000027",
-            "titre": "Amendement n° 27 - PLF POUR 2025",
+            "titre": "Amendement n° 56 - PLF POUR 2025",
             "exposeSommaire": "Construction de logements sociaux",
             "auteur": "Robert Michel",
             "sort": "Adopté",
@@ -334,7 +334,7 @@ clusters_example = [
         },
         {
             "uid": "AMANR5L17PO59048B0324P1D1N000028",
-            "titre": "Amendement n° 28 - PLF POUR 2025",
+            "titre": "Amendement n° 82 - PLF POUR 2025",
             "exposeSommaire": "Rénovation énergétique des bâtiments",
             "auteur": "Dubois Jean",
             "sort": "Non renseigné",
@@ -350,7 +350,7 @@ clusters_example = [
     "amendments": [
         {
             "uid": "AMANR5L17PO59048B0324P1D1N000029",
-            "titre": "Amendement n° 29 - PLF POUR 2025",
+            "titre": "Amendement n° 12 - PLF POUR 2025",
             "exposeSommaire": "Soutien aux clubs sportifs amateurs",
             "auteur": "Martin Élisa",
             "sort": "Adopté",
@@ -358,7 +358,7 @@ clusters_example = [
         },
         {
             "uid": "AMANR5L17PO59048B0324P1D1N000030",
-            "titre": "Amendement n° 30 - PLF POUR 2025",
+            "titre": "Amendement n° 7 - PLF POUR 2025",
             "exposeSommaire": "Rénovation des infrastructures sportives",
             "auteur": "Laurent Anne",
             "sort": "Rejeté",
@@ -366,7 +366,7 @@ clusters_example = [
         },
         {
             "uid": "AMANR5L17PO59048B0324P1D1N000031",
-            "titre": "Amendement n° 31 - PLF POUR 2025",
+            "titre": "Amendement n° 55 - PLF POUR 2025",
             "exposeSommaire": "Préparation aux Jeux Olympiques",
             "auteur": "Moreau Philippe",
             "sort": "Adopté",
@@ -382,7 +382,7 @@ clusters_example = [
     "amendments": [
         {
             "uid": "AMANR5L17PO59048B0324P1D1N000032",
-            "titre": "Amendement n° 32 - PLF POUR 2025",
+            "titre": "Amendement n° 901 - PLF POUR 2025",
             "exposeSommaire": "Modernisation des tribunaux",
             "auteur": "Petit Sophie",
             "sort": "Adopté",
@@ -390,7 +390,7 @@ clusters_example = [
         },
         {
             "uid": "AMANR5L17PO59048B0324P1D1N000033",
-            "titre": "Amendement n° 33 - PLF POUR 2025",
+            "titre": "Amendement n° 845 - PLF POUR 2025",
             "exposeSommaire": "Recrutement de magistrats",
             "auteur": "Bernard Thomas",
             "sort": "Tombé",
@@ -398,7 +398,7 @@ clusters_example = [
         },
         {
     "uid": "AMANR5L17PO59048B0324P1D1N000059",
-    "titre": "Amendement n° 59 - PLF POUR 2025",
+    "titre": "Amendement n° 39 - PLF POUR 2025",
     "exposeSommaire": "Numérisation des procédures judiciaires",
     "auteur": "Robert Michel",
     "sort": "Adopté",
@@ -406,7 +406,7 @@ clusters_example = [
 },
 {
     "uid": "AMANR5L17PO59048B0324P1D1N000060",
-    "titre": "Amendement n° 60 - PLF POUR 2025",
+    "titre": "Amendement n° 611 - PLF POUR 2025",
     "exposeSommaire": "Renforcement de l'aide juridictionnelle",
     "auteur": "Richard Claire",
     "sort": "Non soutenu",
@@ -422,7 +422,7 @@ clusters_example = [
     "amendments": [
         {
             "uid": "AMANR5L17PO59048B0324P1D1N000034",
-            "titre": "Amendement n° 34 - PLF POUR 2025",
+            "titre": "Amendement n° 723 - PLF POUR 2025",
             "exposeSommaire": "Soutien à l'innovation des PME",
             "auteur": "Richard Claire",
             "sort": "Adopté",
@@ -430,7 +430,7 @@ clusters_example = [
         },
         {
             "uid": "AMANR5L17PO59048B0324P1D1N000035",
-            "titre": "Amendement n° 35 - PLF POUR 2025",
+            "titre": "Amendement n° 300 - PLF POUR 2025",
             "exposeSommaire": "Aide à l'export pour les PME",
             "auteur": "Girard Julie",
             "sort": "Non soutenu",
@@ -438,7 +438,7 @@ clusters_example = [
         },
         {
             "uid": "AMANR5L17PO59048B0324P1D1N000036",
-            "titre": "Amendement n° 36 - PLF POUR 2025",
+            "titre": "Amendement n° 116 - PLF POUR 2025",
             "exposeSommaire": "Simplification administrative",
             "auteur": "Robert Michel",
             "sort": "Retiré",
@@ -462,7 +462,7 @@ clusters_example = [
         },
         {
             "uid": "AMANR5L17PO59048B0324P1D1N000038",
-            "titre": "Amendement n° 38 - PLF POUR 2025",
+            "titre": "Amendement n° 51 - PLF POUR 2025",
             "exposeSommaire": "Lutte contre la pollution plastique",
             "auteur": "Martin Élisa",
             "sort": "Non renseigné",
@@ -478,7 +478,7 @@ clusters_example = [
     "amendments": [
         {
             "uid": "AMANR5L17PO59048B0324P1D1N000039",
-            "titre": "Amendement n° 39 - PLF POUR 2025",
+            "titre": "Amendement n° 109 - PLF POUR 2025",
             "exposeSommaire": "Modernisation de l'industrie",
             "auteur": "Laurent Anne",
             "sort": "Adopté",
@@ -486,7 +486,7 @@ clusters_example = [
         },
         {
             "uid": "AMANR5L17PO59048B0324P1D1N000040",
-            "titre": "Amendement n° 40 - PLF POUR 2025",
+            "titre": "Amendement n° 310 - PLF POUR 2025",
             "exposeSommaire": "Transition écologique industrielle",
             "auteur": "Moreau Philippe",
             "sort": "Rejeté",
@@ -494,7 +494,7 @@ clusters_example = [
         },
         {
             "uid": "AMANR5L17PO59048B0324P1D1N000041",
-            "titre": "Amendement n° 41 - PLF POUR 2025",
+            "titre": "Amendement n° 72 - PLF POUR 2025",
             "exposeSommaire": "Formation professionnelle industrie",
             "auteur": "Petit Sophie",
             "sort": "Tombé",
@@ -510,7 +510,7 @@ clusters_example = [
     "amendments": [
         {
             "uid": "AMANR5L17PO59048B0324P1D1N000042",
-            "titre": "Amendement n° 42 - PLF POUR 2025",
+            "titre": "Amendement n° 147 - PLF POUR 2025",
             "exposeSommaire": "Promotion du tourisme durable",
             "auteur": "Bernard Thomas",
             "sort": "Adopté",
@@ -518,7 +518,7 @@ clusters_example = [
         },
         {
             "uid": "AMANR5L17PO59048B0324P1D1N000043",
-            "titre": "Amendement n° 43 - PLF POUR 2025",
+            "titre": "Amendement n° 351 - PLF POUR 2025",
             "exposeSommaire": "Rénovation sites touristiques",
             "auteur": "Richard Claire",
             "sort": "Non soutenu",
@@ -542,7 +542,7 @@ clusters_example = [
         },
         {
             "uid": "AMANR5L17PO59048B0324P1D1N000045",
-            "titre": "Amendement n° 45 - PLF POUR 2025",
+            "titre": "Amendement n° 100 - PLF POUR 2025",
             "exposeSommaire": "Développement quantique",
             "auteur": "Robert Michel",
             "sort": "Non renseigné",
@@ -550,7 +550,7 @@ clusters_example = [
         },
         {
             "uid": "AMANR5L17PO59048B0324P1D1N000046",
-            "titre": "Amendement n° 46 - PLF POUR 2025",
+            "titre": "Amendement n° 108 - PLF POUR 2025",
             "exposeSommaire": "Innovation médicale",
             "auteur": "Dubois Jean",
             "sort": "Retiré",
@@ -566,7 +566,7 @@ clusters_example = [
     "amendments": [
         {
             "uid": "AMANR5L17PO59048B0324P1D1N000047",
-            "titre": "Amendement n° 47 - PLF POUR 2025",
+            "titre": "Amendement n° 110 - PLF POUR 2025",
             "exposeSommaire": "Formation professionnelle continue",
             "auteur": "Martin Élisa",
             "sort": "Adopté",
@@ -574,7 +574,7 @@ clusters_example = [
         },
         {
             "uid": "AMANR5L17PO59048B0324P1D1N000048",
-            "titre": "Amendement n° 48 - PLF POUR 2025",
+            "titre": "Amendement n° 112 - PLF POUR 2025",
             "exposeSommaire": "Développement de l'apprentissage",
             "auteur": "Laurent Anne",
             "sort": "Rejeté",
@@ -582,7 +582,7 @@ clusters_example = [
         },
         {
             "uid": "AMANR5L17PO59048B0324P1D1N000049",
-            "titre": "Amendement n° 49 - PLF POUR 2025",
+            "titre": "Amendement n° 889 - PLF POUR 2025",
             "exposeSommaire": "Formation aux métiers d'avenir",
             "auteur": "Moreau Philippe",
             "sort": "Non soutenu",
