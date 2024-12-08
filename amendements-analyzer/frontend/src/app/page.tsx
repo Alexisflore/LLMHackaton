@@ -35,6 +35,42 @@ export default function Home() {
     fetchFilterValues();
   }, []);
 
+  useEffect(() => {
+    if (allClusters.length > 0) {
+      const filteredClusters = allClusters.map((cluster) => ({
+        ...cluster,
+        amendments: cluster.amendments.filter((amendment) => {
+          const matchesSort = 
+            !selectedSort || 
+            selectedSort === 'Tous' || 
+            amendment.sort === selectedSort;
+          
+          const matchesInstance = 
+            !selectedInstance || 
+            selectedInstance === 'Tous' || 
+            amendment.instance === selectedInstance;
+          
+          return matchesSort && matchesInstance;
+        }),
+      })).filter(cluster => cluster.amendments.length > 0);
+      
+      setClusters(filteredClusters);
+    }
+  }, [selectedSort, selectedInstance, allClusters]);
+
+  useEffect(() => {
+    if (selectedCluster && clusters.length > 0) {
+      const updatedSelectedCluster = clusters.find(
+        cluster => cluster.cluster_id === selectedCluster.cluster_id
+      );
+      if (updatedSelectedCluster) {
+        setSelectedCluster(updatedSelectedCluster);
+      } else {
+        setSelectedCluster(null);
+      }
+    }
+  }, [clusters]);
+
   const fetchAllClusters = async () => {
     try {
       const response = await axios.get('http://localhost:8000/api/demo/clusters');
@@ -47,50 +83,12 @@ export default function Home() {
     }
   };
 
-  const fetchClustersUids = (sort: string | null, instance: string | null) => {
-    const params = new URLSearchParams();
-    if (sort) params.append('sort_filter', sort);
-    if (instance) params.append('instance_filter', instance);
-    fetch(`/api/get_clusters_uids?${params.toString()}`)
-      .then(response => response.json())
-      .then(data => {
-        // Traitez les données des clusters ici
-      });
-  };
-
   const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedSort(event.target.value || null);
-    filterClusters();
+    setSelectedSort(event.target.value === 'Tous' ? '' : event.target.value);
   };
 
   const handleInstanceChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedInstance(event.target.value || null);
-    filterClusters();
-  };
-
-  const filterClusters = () => {
-    const filteredClusters = allClusters.map((cluster) => {
-      const filteredAmendments = cluster.amendments.filter((amendment) => {
-        const matchesSort =
-          selectedSort === null ||
-          selectedSort === 'Tous' ||
-          amendment.sort === selectedSort;
-
-        const matchesInstance =
-          selectedInstance === null ||
-          selectedInstance === 'Tous' ||
-          amendment.instance === selectedInstance;
-
-        return matchesSort && matchesInstance;
-      });
-
-      return {
-        ...cluster,
-        amendments: filteredAmendments,
-      };
-    });
-
-    setClusters(filteredClusters);
+    setSelectedInstance(event.target.value === 'Tous' ? '' : event.target.value);
   };
 
   const fetchFilterValues = async () => {
@@ -125,7 +123,7 @@ export default function Home() {
         
         <div className="mb-4 text-black">
           <label htmlFor="sort-filter" className="mr-2">
-            Filtrer par Sort de l'amendement :
+            Filtrer par Sort de l&apos;amendement :
           </label>
           <select
             id="sort-filter"
@@ -171,7 +169,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Liste des clusters */}
             <div className="md:col-span-1 space-y-4">
-              <h2 className="text-xl font-semibold mb-4 text-black">Groupes d'amendements</h2>
+              <h2 className="text-xl font-semibold mb-4 text-black">Groupes d&apos;amendements</h2>
               {clusters.map((cluster) => (
                 <div
                   key={cluster.cluster_id}
@@ -204,38 +202,28 @@ export default function Home() {
 
                   <div className="space-y-4">
                     <h3 className="text-lg font-semibold text-black">Amendements</h3>
-                    {selectedCluster.amendments.filter(
-                      (amendment) =>
-                        (selectedSort === null || selectedSort === 'Tous' || amendment.sort === selectedSort) &&
-                        (selectedInstance === null || selectedInstance === 'Tous' || amendment.instance === selectedInstance)
-                    ).length > 0 ? (
-                      selectedCluster.amendments
-                        .filter(
-                          (amendment) =>
-                            (selectedSort === null || selectedSort === 'Tous' || amendment.sort === selectedSort) &&
-                            (selectedInstance === null || selectedInstance === 'Tous' || amendment.instance === selectedInstance)
-                        )
-                        .map((amendment) => (
-                          <div
-                            key={amendment.uid}
-                            className="border rounded-lg p-4"
-                          >
-                            <div className="flex justify-between items-start mb-2">
-                              <h4 className="font-medium text-black">{amendment.titre}</h4>
-                              <span
-                                className={`px-2 py-1 rounded text-sm ${getSortBadgeColor(amendment.sort)}`}
-                              >
-                                {amendment.sort}
-                              </span>
-                            </div>
-                            <p className="text-sm text-black">
-                              Auteur: {amendment.auteur}
-                            </p>
-                            <div className="mt-2 text-sm text-black">
-                              {amendment.exposeSommaire}
-                            </div>
+                    {selectedCluster.amendments.length > 0 ? (
+                      selectedCluster.amendments.map((amendment) => (
+                        <div
+                          key={amendment.uid}
+                          className="border rounded-lg p-4"
+                        >
+                          <div className="flex justify-between items-start mb-2">
+                            <h4 className="font-medium text-black">{amendment.titre}</h4>
+                            <span
+                              className={`px-2 py-1 rounded text-sm ${getSortBadgeColor(amendment.sort)}`}
+                            >
+                              {amendment.sort}
+                            </span>
                           </div>
-                        ))
+                          <p className="text-sm text-black">
+                            Auteur: {amendment.auteur}
+                          </p>
+                          <div className="mt-2 text-sm text-black">
+                            {amendment.exposeSommaire}
+                          </div>
+                        </div>
+                      ))
                     ) : (
                       <p className="text-black">
                         Aucun amendement ne correspond aux filtres sélectionnés.
@@ -245,7 +233,7 @@ export default function Home() {
                 </div>
               ) : (
                 <div className="bg-white rounded-lg shadow p-6 text-center text-black">
-                  Sélectionnez un groupe d'amendements pour voir les détails
+                  Sélectionnez un groupe d&apos;amendements pour voir les détails
                 </div>
               )}
             </div>

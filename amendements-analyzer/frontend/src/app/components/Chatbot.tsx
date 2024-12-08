@@ -62,11 +62,11 @@ export default function Chatbot() {
     // Générer une réponse aléatoire avec des amendements fictifs
     const titresComplets = [
       'PLF POUR 2025',
-      'PLF POUR 2026',
-      'PLF POUR 2027',
-      'PLF POUR 2028',
-      'PLF POUR 2029',
-      'PLF POUR 2030',
+      'PLF POUR 2025',
+      'PLF POUR 2025',
+      'PLF POUR 2025',
+      'PLF POUR 2025',
+      'PLF POUR 2025',
     ];
     const numeros = [860, 629, 921, 143, 672, 939];
     const reponse = `Voici la liste des amendements prévoyant une baisse des dépenses publiques :\n\n${numeros
